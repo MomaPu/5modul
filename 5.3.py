@@ -1,90 +1,89 @@
-import random # импортируем для случайного выбора
 from random import randint
 
-# Задаем воина
 class Voin:
-    def __init__(self): # иницилизация показателей
+    def __init__(self):  # инициализация показателей
         self.health = 100
         self.armory = 100
         self.stamina = 100
 
-    def hit1(self): # первый удар по броне
+    def Damage_with_armory(self):  # первый удар по броне
         if self.armory > 0:
             if self.stamina > 0:
-                damage = random.randint(0, 20)
+                damage = randint(0, 20)
                 self.health -= damage
-                self.armory -= random.randint(0, 10)
+                self.armory -= randint(0, 10)
             else:
-                damage = random.randint(0, 10)
+                damage = randint(0, 10)
                 self.health -= damage
-                self.armory -= random.randint(0, 10)
+                self.armory -= randint(0, 10)
         else:
             if self.stamina > 0:
-                self.health -= random.randint(10, 30)
+                self.health -= randint(10, 30)
             else: 
-                self.health -= random.randint(0, 10)
+                self.health -= randint(0, 10)
 
-    def hit2(self): # второй удар друг по другу
+    def Clear_damage(self):  # второй удар друг по другу
         if self.stamina > 0:
-            self.health -= random.randint(10, 30)
+            self.health -= randint(10, 30)
         else: 
-            self.health -= random.randint(0, 10)
+            self.health -= randint(0, 10)
 
-    def tired(self):
+    def Tired(self):
         self.stamina -= 10
 
-v1 = Voin()
-v2 = Voin()
-war = True
+first_warrior = Voin()
+second_warrior = Voin()
 
-while war: 
-    at1 = randint(1, 2) # случайный выбор атаки или защиты
-    at2 = randint(1, 2)
+while True: 
+    # Пока здоровье > 0 бьемся
+    while first_warrior.health > 0 and second_warrior.health > 0:
+        attack_one = randint(1, 2)  # случайный выбор атаки или защиты
+        attack_two = randint(1, 2)
 
-    while v1.health > 10 and v2.health > 10: # пока здоровье больше 10- бьемся
-        if at1 == 2 and at2 == 2:
+        if attack_one == 2 and attack_two == 2:
             print('Оба воина пошли в атаку')
-            v1.hit2()
-            v1.tired()
-            print('Здоровье 1 воина: ' + str(v1.health))
-            v2.hit2()
-            v2.tired()
-            print('Здоровье 2 воина: ' + str(v2.health))
-        elif at1 == 2 and at2 == 1:
+            first_warrior.Clear_damage()
+            first_warrior.Tired()
+            print('Здоровье 1 воина: ' + str(first_warrior.health))
+            second_warrior.Clear_damage()
+            second_warrior.Tired()
+            print('Здоровье 2 воина: ' + str(second_warrior.health))
+        elif attack_one == 2 and attack_two == 1:
             print('Первый воин пошел в атаку')
-            v1.hit1()
-            v1.tired()
-            print('Здоровье 2 воина: ' + str(v2.health))
-        elif at1 == 1 and at2 == 2:
+            first_warrior.Damage_with_armory()
+            first_warrior.Tired()
+            print('Здоровье 2 воина: ' + str(second_warrior.health))
+        elif attack_one == 1 and attack_two == 2:
             print('Второй воин пошел в атаку')
-            v2.hit1()
-            v2.tired()
-            print('Здоровье 1 воина: ' + str(v1.health))
+            second_warrior.Damage_with_armory()
+            second_warrior.Tired()
+            print('Здоровье 1 воина: ' + str(first_warrior.health))
 
         # Проверка здоровья после каждого раунда атаки
-        if v1.health <= 10 or v2.health <= 10:
+        if first_warrior.health <= 0 or second_warrior.health <= 0:
             break
 
+    if first_warrior.health <= 0 and second_warrior.health <= 0:
+        print('Патовая ситуация, воины без сил сражаться далее')
+        break
     # Проверка состояния первого воина
-    if v1.health <= 10:
+    if first_warrior.health <= 0:
         mes = input("Убить ли первого воина? (1 - Палец вверх, 2 - Палец вниз): ")
         if mes == '1':
             print('Воин остается в живых')
         elif mes == '2':
             print('Воин убит')
-            war = False
         else:
             print('Вас не поняли, воин убит')
-            war = False
+        break
 
     # Проверка состояния второго воина
-    if v2.health <= 10:
+    if second_warrior.health <= 0:
         mes = input("Убить ли второго воина? (1 - Палец вверх, 2 - Палец вниз): ")
         if mes == '1':
             print('Воин остается в живых')
         elif mes == '2':
             print('Воин убит')
-            war = False
         else:
             print('Вас не поняли, воин убит')
-            war = False
+        break

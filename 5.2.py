@@ -1,22 +1,24 @@
 class Point:
-    def __init__(self, x, y):
+    def __init__(self, x, y): # задаем xy
         self._x = x
         self._y = y 
 
-    def set_x(self, n):
-        self._x = n 
+    def set_x(self, n): # работа с x
+        self._x = n  
 
-    def set_y(self, z):
-        self._y = z 
+    def set_y(self, z): # работа с y
+        self._y = z  
 
     def get_info(self):
         return [self._x, self._y]
 
-def workxy(x, y):
+# подпрограмма выбора пользователем действий 
+def workxy(x, y): 
     P = Point(x, y)
+    # вывод значений на экран
     print("Значение x,y: " + str(P.get_info()))
-    work = True
-    while work:
+    while True:
+    	# выбор операции
         quest = input('Какую операцию желаете провести?\n'
                       '1. Изменить x;\n'
                       '2. Изменить y;\n'
@@ -27,8 +29,8 @@ def workxy(x, y):
                       '7. Увеличить y;\n'
                       '8. Показать x,y;\n'
                       '9. Закончить работу\n'
-                      '(укажите цифру операции): ')
-        
+                       '(укажите цифру операции): ')
+        # действия с x y :
         if quest == '1':
             x = int(input('Укажите новый x: '))
             P.set_x(x)
@@ -59,11 +61,12 @@ def workxy(x, y):
         elif quest == '8':
             print(P.get_info())
         elif quest == '9':
-            work = False
+            break
         else:
             print('Неверный выбор операции')
 
-mes1 = int(input('Введите значение x: '))
-mes2 = int(input('Введите значение y: '))
-
-workxy(mes1, mes2)
+mes1 = int(input('Введите значение x: ')) # задаем x
+mes2 = int(input('Введите значение y: ')) # задаем y
+ 
+workxy(mes1, mes2) 
+ 
